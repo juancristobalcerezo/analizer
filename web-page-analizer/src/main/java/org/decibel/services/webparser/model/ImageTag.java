@@ -7,15 +7,10 @@ public class ImageTag implements ITag {
 
 	private URI uri;
 
-	@Override
-	public String getDomain() {
-
-		return uri.getHost();
-
-	}
+	
 
 	@Override
-	public String getUrl() {
+	public String getPayload() {
 		
 		return uri.toString();
 		
@@ -25,6 +20,12 @@ public class ImageTag implements ITag {
 
 	public void setSource(String value) throws URISyntaxException {
 		this.uri = new URI(value);
+	}
+
+
+
+	public String getSrc() {
+		return getPayload();
 	}
 
 }

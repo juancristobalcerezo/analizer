@@ -75,12 +75,13 @@ public class JSoupWrapper implements IParser {
 
 			src = getImageSrc(headline);
 
-			if (src == null) {
+			if (src == null || src.isEmpty()) {
 				logger.warn("Tag has no src: " + headline.html());
 			} else {
 				imageTag.setSource(src);
+				return imageTag;
 			}
-			return imageTag;
+
 		}
 
 		return null;
@@ -92,7 +93,7 @@ public class JSoupWrapper implements IParser {
 
 		String src = null;
 
-		for (int i = 0; i < attributes.length && src == null; i++) {
+		for (int i = 0; i < attributes.length && (src == null || src.isEmpty()); i++) {
 			src = headline.attr(attributes[i]);
 		}
 

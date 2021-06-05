@@ -108,12 +108,12 @@ public class WebPageAnalizerApplicationTests {
 
 		// It just an exercise
 
-		assertEquals("cdn.sstatic.net", first.getDomain());
+		
 		assertEquals("https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e",
-				first.getUrl());
+				first.getPayload());
 
-		assertEquals("pixel.quantserve.com", last.getDomain());
-		assertEquals("https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif", last.getUrl());
+		
+		assertEquals("https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif", last.getPayload());
 
 	}
 
@@ -127,8 +127,8 @@ public class WebPageAnalizerApplicationTests {
 			e.printStackTrace();
 		}
 
-		assertEquals("https://stackoverflow.com/questions/9607903/get-domain-name-from-given-url", tag.getUrl());
-		assertEquals("stackoverflow.com", tag.getDomain());
+		assertEquals("https://stackoverflow.com/questions/9607903/get-domain-name-from-given-url", tag.getSrc());
+	
 
 	}
 
@@ -136,12 +136,13 @@ public class WebPageAnalizerApplicationTests {
 	public void testServiceReturnsAJson() {
 		
 		TagsCollection tagsCollection = null;
+		String resultString = null;
 		try {
 			ResultActions result = mockMvc.perform(post("/collect-images").content(
-					"https://stackoverflow.com/questions/9607903/get-domain-name-from-given-url"))
+					"https://github.com/juancristobalcerezo/decibel"))
 					.andExpect(status().isOk());
 			
-			String resultString = result.andReturn().getResponse().getContentAsString();
+			resultString = result.andReturn().getResponse().getContentAsString();
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			tagsCollection = objectMapper.readValue(resultString, TagsCollection.class);
@@ -153,8 +154,13 @@ public class WebPageAnalizerApplicationTests {
 			e.printStackTrace();
 		}
 		
-		assertEquals("stackoverflow.com",tagsCollection.getDomain());
-		assertEquals(46,tagsCollection.getImages().size());
+		System.out.println(resultString);
+		assertEquals("github.com",tagsCollection.getDomain());
+		assertEquals("{\"domain\":\"github.com\",\"images\":[\"https://github.githubassets.com/images/search-key-slash.svg\",\"https://avatars.githubusercontent.com/u/31847993?s=48&v=4\"]}",resultString);
+		
+		for (String tag:tagsCollection.getImages()) {
+			System.out.println(tag);
+		}
 	}
 	
 	
