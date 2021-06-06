@@ -3,7 +3,7 @@ package org.decibel.services.webparser.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TagsCollection {
+public class ImageTagsCollection {
 
 	private String domain;
 	
@@ -26,6 +26,10 @@ public class TagsCollection {
 
 	public void setImages(List<String> images) {
 		this.images = images;
+	}
+
+	public void add(String url) {
+		getImages().add(url);
 	}
 	
 	

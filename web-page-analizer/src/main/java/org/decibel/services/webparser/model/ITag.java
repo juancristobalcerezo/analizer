@@ -3,7 +3,6 @@ package org.decibel.services.webparser.model;
 
 
 public interface ITag {
-
-	
-	String getPayload();
+	String getDomain();
+	String getUrl();
 }
